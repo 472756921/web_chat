@@ -1,0 +1,12 @@
+.bk{
+}
+.listTitle{
+  text-align: center;
+  font-size: 1rem;
+  background: #5990b3;  /* fallback for old browsers */
+  color: #ffffff;
+  padding: .4rem;
+}
+.content{
+  padding-top: .8rem;
+}

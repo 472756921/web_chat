@@ -1,0 +1,13 @@
+.content{
+  line-height: 2.2rem;
+  padding:0 .4rem;
+}
+.line{
+  border: .03rem solid #eee;
+  margin: .8rem 0;
+}
+.text{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
