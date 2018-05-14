@@ -30,12 +30,6 @@ export default {
             pathname: '/login',
           }))
         } else {
-          const ws = yield new WebSocket("ws://localhost:8181");
-          ws.onopen = (e) => {
-            console.log('消息服务器已连接');
-            ws.send(JSON.stringify({userID:user.userID, type: 'init'}));
-            window.ws = ws;
-          }
           yield put({type: 'userInfo', payload: {data}});
         }
       }
