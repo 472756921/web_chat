@@ -1,4 +1,4 @@
-import { login } from '../services/home'
+import { getonLineUser } from '../services/home'
 
 export default {
   namespace: 'home',
@@ -8,16 +8,29 @@ export default {
 
   subscriptions: {
     setup({ dispatch, history }) {
+      history.listen((location) => {
+        if(location.pathname==='/home'){
+          dispatch({ type: 'query' });
+        }
+      })
     },
   },
 
   effects: {
-    * createWSS ({payload}, { put, call, select }) {
+    * query ({payload}, { put, call, select }) {
+      const data = yield call(getonLineUser, payload)
+      if(data.err === undefined ){
+        yield put({type: 'userList', payload: data});
+      }
     },
   },
 
   reducers: {
-    loginScuess (state, {payload} ) {
+    userList (state, {payload} ) {
+      return {
+        ...state,
+        userList: payload.data,
+      }
     }
   },
 

@@ -10,5 +10,7 @@ module.exports = {
     getUser: api_M + '/users/getUser',
     login: api_M + '/users/login',
     loginOut: api_M + '/users/loginOut',
+    getonLineUser: api_M + '/users/getonLineUser',
   }
 }
+module.exports.api_MSS = api_MSS;

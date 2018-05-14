@@ -6,7 +6,6 @@ export default {
 
   state: {
     user: '',
-    wss: '',
   },
 
   subscriptions: {
@@ -21,36 +20,29 @@ export default {
 
   effects: {
     * query( {payload}, {call, put, select} ) {
-      const {data}  = yield call(getUser);
-      const {wss} = yield select(_=>_.app);
-      const {user} = data;
-      if(user === undefined) {
-        yield put(routerRedux.push({
-          pathname: '/login',
-        }))
+      const {data, err}  = yield call(getUser);
+      if(err !== undefined) {
+        return false;
       } else {
-        if(wss !== ''){
-          yield put({type: 'userInfo', payload: {data}});
+        const {user} = data;
+        if(user === undefined) {
+          yield put(routerRedux.push({
+            pathname: '/login',
+          }))
         } else {
           const ws = yield new WebSocket("ws://localhost:8181");
           ws.onopen = (e) => {
             console.log('消息服务器已连接');
             ws.send(JSON.stringify({userID:user.userID, type: 'init'}));
+            window.ws = ws;
           }
-          yield put({type: 'userInfoAndWss', payload: {data, ws}});
+          yield put({type: 'userInfo', payload: {data}});
         }
       }
     },
   },
 
   reducers: {
-    userInfoAndWss(state, {payload}) {
-      return {
-        ...state,
-        user: payload.data,
-        wss: payload.ws,
-      }
-    },
     userInfo(state, {payload}) {
       return {
         ...state,

@@ -5,21 +5,24 @@ import UserContent from '../../components/userContent';
 
 import {name} from '../../utils/config'
 
-const home = ({loading, dispatch}) => {
+const home = ({loading, home, dispatch}) => {
   function datile() {
-    alert(1222);
   }
   return (
     <div className={styles.bk}>
       <div className={styles.listTitle}>好友列表</div>
       <div className={styles.content}>
-        <UserContent user={{name: 'Benson'}} datile={datile}/>
+        {
+          home.userList.map( (it, i) => {
+            return <UserContent user={{name: it.userName}} datile={datile} key={i}/>
+          } )
+        }
       </div>
     </div>
   )
 }
 home.propTypes = {
-  dispatch: PropTypes.func,
   loading: PropTypes.object,
+  home: PropTypes.object,
 }
-export default connect(({ loading }) => ({ loading }))(home)
+export default connect(({ loading, home }) => ({ loading, home }))(home)

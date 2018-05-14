@@ -17,7 +17,7 @@ export default {
     * login ({payload}, { put, call, select }) {
       const data = yield call(login, payload)
       if(data.err) {
-        if(data.err.response.status === 400)
+        if(data.err.response.status === 403)
         message.error('账号或密码错误');
         return false
       } else {
