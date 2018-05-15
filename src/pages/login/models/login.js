@@ -22,6 +22,7 @@ export default {
         return false
       } else {
         yield put({type: 'loginScuess', payload: data});
+        sessionStorage.setItem('user', JSON.stringify(data))
         yield put(routerRedux.push({
           pathname: '/home',
         }))

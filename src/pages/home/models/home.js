@@ -1,4 +1,5 @@
 import { getonLineUser } from '../services/home'
+import {wsConnect} from '../../../utils/webSocket';
 
 export default {
   namespace: 'home',
@@ -11,6 +12,9 @@ export default {
       history.listen((location) => {
         if(location.pathname==='/home'){
           dispatch({ type: 'query' });
+          return wsConnect((data) => {
+            dispatch({ type:'message', payload: data })
+          })
         }
       })
     },
@@ -23,14 +27,14 @@ export default {
         yield put({type: 'userList', payload: data});
       }
       const {user} = yield select( _ => _.app )
-      const ws = yield new WebSocket("ws://localhost:8181");
-      ws.onopen = (e) => {
-        console.log('消息服务器已连接');
-        ws.send(JSON.stringify({userID:user.user.userID, type: 'init'}));
-        window.ws = ws;
-      }
-
     },
+
+    * message({payload}, { put, call, select }) {
+      if(payload.type === 'userUpLine'){
+        let {userList} = yield select( _ => _.home)
+        userList.push(payload.msg);
+      }
+    }
   },
 
   reducers: {
