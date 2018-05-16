@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import UserContent from '../../components/userContent';
 
 const home = ({loading, home, dispatch}) => {
-  function datile() {
-    dispatch({type:'home/datile'});
+  function datile(userID) {
+    dispatch({type:'home/datile', payload:userID});
   }
   return (
     <div className={styles.bk}>
@@ -13,7 +13,7 @@ const home = ({loading, home, dispatch}) => {
       <div className={styles.content}>
         {
           home.userList.map( (it, i) => {
-            return <UserContent user={{name: it.userName}} datile={datile} key={i}/>
+            return <UserContent user={{name: it.userName}} datile={() => datile(it.userID)} key={i}/>
           } )
         }
       </div>

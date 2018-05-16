@@ -40,7 +40,7 @@ export default {
 
     * datile({payload}, { put, call, select }) {
       yield put(routerRedux.push({
-        pathname: '/home/1',
+        pathname: '/home/' + payload,
       }))
     },
 
