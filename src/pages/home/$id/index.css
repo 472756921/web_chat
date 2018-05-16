@@ -1,0 +1,36 @@
+.bk{
+  background: #f7f7f7;
+  height: 100vh;
+}
+.title{
+  font-size: 1rem;
+  text-align: center;
+  background: #5990b3;
+  color: #f7f7f7;
+  padding: .4rem 0;
+}
+.messageContent{
+  position: absolute;
+  width: 100%;
+  bottom: 3rem;
+  top: 2.3rem;
+  overflow: auto;
+  padding: .6rem;
+}
+.toke{
+  position: absolute;
+  border-top: 1px solid #ddd;
+  bottom: 0;
+  height: 3rem;
+  width: 100%;
+  background: #fff;
+  text-align: center;
+  padding: .5rem 0;
+}
+.inputs{
+  width: 80%;
+  float: left;
+}
+.button{
+  float: left;
+}

@@ -25,7 +25,7 @@ export default {
         return false;
       } else {
         const {user} = data;
-        if(user === undefined) {
+        if(user === undefined || user === '') {
           yield put(routerRedux.push({
             pathname: '/login',
           }))

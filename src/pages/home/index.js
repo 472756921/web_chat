@@ -3,10 +3,9 @@ import styles from './index.css'
 import PropTypes from 'prop-types'
 import UserContent from '../../components/userContent';
 
-import {name} from '../../utils/config'
-
 const home = ({loading, home, dispatch}) => {
   function datile() {
+    dispatch({type:'home/datile'});
   }
   return (
     <div className={styles.bk}>

@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 import {openPages} from '../utils/config'
 import Loader from '../components/Loader'
 import { name, footerText } from '../utils/config'
-import { Link } from 'react-router-dom'
 import styles from './app.css';
 
 const App = ({children, loading, location}) => {
