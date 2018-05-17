@@ -8,6 +8,7 @@ module.exports = {
   openPages: ['/login', '/404'],
   api: {
     getUser: api_M + '/users/getUser',
+    getUserByID: api_M + '/users/getUserByID',
     login: api_M + '/users/login',
     loginOut: api_M + '/users/loginOut',
     getonLineUser: api_M + '/users/getonLineUser',

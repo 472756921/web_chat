@@ -1,5 +1,5 @@
 import { getonLineUser } from '../services/home';
-import {wsConnect} from '../../../utils/webSocket';
+import { wsConnect } from '../../../utils/webSocket';
 import { routerRedux } from 'dva/router';
 
 export default {
@@ -11,13 +11,8 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if(location.pathname==='/home'){
-          if(sessionStorage.getItem('user') !== null) {
-            dispatch({ type: 'query' });
-            return wsConnect((data) => {
-              dispatch({ type:'message', payload: data })
-            })
-          }
+        if(location.pathname === '/home'){
+          dispatch({ type: 'rest' });
         }
       })
     },
@@ -25,10 +20,13 @@ export default {
 
   effects: {
     * query ({payload}, { put, call, select }) {
-      const data = yield call(getonLineUser, payload)
+      const data = yield call(getonLineUser);
       if(data.err === undefined ){
         yield put({type: 'userList', payload: data});
       }
+      return wsConnect((data) => {
+        put({ type:'message', payload: data })
+      })
     },
 
     * message({payload}, { put, call, select }) {
@@ -40,8 +38,13 @@ export default {
 
     * datile({payload}, { put, call, select }) {
       yield put(routerRedux.push({
-        pathname: '/home/' + payload,
+        pathname: '/home/' + payload, userName: 'Benson'
       }))
+    },
+
+    * rest({payload}, { put, call, select }) {
+      let user = yield select( _ => _.app)
+      console.log(user);
     },
 
   },
