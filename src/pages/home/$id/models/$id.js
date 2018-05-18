@@ -31,7 +31,9 @@ export default {
 
     * sendMessage({payload},{call, put, select}) {
       let {send_message, userInfo} = yield select(_=>_.chatContent);
-      sendMessage(userInfo.userID, send_message);
+      let {user} = yield select(_=>_.app);
+      console.log(user);
+      sendMessage(user.user.userID, userInfo.userID, send_message);
       yield put({type: 'send', payload:{type:1}})
     },
 

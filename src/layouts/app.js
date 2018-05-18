@@ -8,7 +8,8 @@ import Loader from '../components/Loader'
 import { name, footerText } from '../utils/config'
 import styles from './app.css';
 
-const App = ({children, loading, location}) => {
+const App = ({app, children, loading, location, dispatch}) => {
+  let { user } = app;
   let { pathname } = location;
   if(openPages && openPages.includes(pathname)){
     return (
@@ -19,12 +20,18 @@ const App = ({children, loading, location}) => {
       </div>
     )
   } else {
-    return (
-      <div>
-        <Loader fullScreen spinning={loading.global}></Loader>
-        {children}
-      </div>
-    )
+    if(user){
+      return (
+        <div>
+          <Loader fullScreen spinning={loading.global}></Loader>
+          {children}
+        </div>
+      )
+    } else {
+      return (
+        <div></div>
+      )
+    }
   }
 }
 

@@ -16,6 +16,6 @@ export function wsConnect (action, userData) {
   }
 }
 
-export let sendMessage = (msg, tid, uID) => {
+export let sendMessage = (uID, tid, msg) => {
   ws.send(JSON.stringify({userID:uID, type: 'chat', Tid: tid, msg: msg}));
 }
