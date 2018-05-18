@@ -10,36 +10,47 @@ export default {
 
   subscriptions: {
     setup({ dispatch, history }) {
-      console.log(history);
+      history.listen((location) => {
+        if(location.pathname==='/home'&&JSON.parse(sessionStorage.getItem('user'))){
+          dispatch({ type: 'query' });
+          return wsConnect((data) => {
+            dispatch({ type:'message', payload: data })
+            }, JSON.parse(sessionStorage.getItem('user'))
+          )
+        }
+      })
     },
   },
 
   effects: {
     * query ({payload}, { put, call, select }) {
-      const data = yield call(getonLineUser);
       let {user} = yield select( _ => _.app);
+      const data = yield call(getonLineUser);
       if(data.err === undefined ){
         yield put({type: 'userList', payload: data});
       }
-
-      wsConnect((data) => {
-        put({ type:'message', payload: data })
-      }, user)
     },
 
     * message({payload}, { put, call, select }) {
-      console.log(123);
-      console.log(payload);
       if(payload.type === 'userUpLine'){
         let {userList} = yield select( _ => _.home)
-        userList.push(payload.msg);
+        const d = userList.filter(u => u.userID === payload.msg.userID);
+        if(d.length === 0) {
+          userList.push(payload.msg);
+        }
+      } else if (payload.type === 'chat') {
+        yield put({type: 'chatContent/showMesg', payload});
       }
     },
 
     * datile({payload}, { put, call, select }) {
-      yield put(routerRedux.push({
-        pathname: '/home/' + payload, userName: 'Benson'
-      }))
+      if(payload === JSON.parse(sessionStorage.getItem('user')).data.userID){
+        return false
+      } else {
+        yield put(routerRedux.push({
+          pathname: '/home/' + payload, userName: 'Benson'
+        }))
+      }
     },
 
   },

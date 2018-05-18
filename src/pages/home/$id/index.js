@@ -17,7 +17,7 @@ const chat = ({chatContent, loading, dispatch}) => {
       <div className={styles.messageContent}>
         {
           chatContent.chat_message.map( (msg, i) => {
-            return <ChatContent message={msg} key={i}/>
+            return <ChatContent message={msg} key={i} userInfo={chatContent.userInfo}/>
           })
         }
       </div>
